@@ -6,10 +6,10 @@ var MongoClient = require('mongodb').MongoClient;
 //variables
 var collection;
 var allMagic;
+var resultObj;
 
 //Where to look for the home page?
 app.use(express.static(__dirname + '/mtgkeeper'));
-
 
 // Connect to the db
 MongoClient.connect("mongodb://localhost:27017/magickeeper", function(err, db) {
@@ -19,13 +19,11 @@ MongoClient.connect("mongodb://localhost:27017/magickeeper", function(err, db) {
   //Choose the collection to use
   collection = db.collection('mtgkeeper');
 
-  //Do something with it - at the minute just console logging to see if I can get it.
-
-
+  //find everything in the collection for a start
   allMagic = collection.find().toArray(function(err, results) {
-  console.log(results);
-  //res.render(results);
-  // send HTML file populated with quotes here
+    //pass the results to an object so we can do things with it below
+    resultObj=results;
+
 })
 
 
@@ -33,18 +31,23 @@ MongoClient.connect("mongodb://localhost:27017/magickeeper", function(err, db) {
 
 
 
-//when a get request is made on the url /shop then the response sends the appropriate file
+// when a get request is made on the url /shop then the response sends the appropriate file
+// left in as an example
+
 // app.get('/shop', function (req, res) {
 //    res.sendFile(path.join(__dirname + '/dollproject/products.html'));
 // });
 //
 
+// Or using with parameters - again left in for Example
 
 /*app.get('/:name', function(req,res) {
 res.send('Hello ' + req.params.name);
 });*/
+
 app.get('/allMagic', function (req, res, next) {
-  res.json(allMagic);
+  //display the JSON object
+  res.json(resultObj);
   next();
 });
 
