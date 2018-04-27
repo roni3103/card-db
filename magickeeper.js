@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var MongoClient = require('mongodb').MongoClient;
+// Using './' means we can pick up the config and it's not treated as 
+const config = require('./config');
 
 //variables
 var collection;
@@ -12,7 +14,7 @@ var resultObj;
 app.use(express.static(__dirname + '/mtgkeeper'));
 
 // Connect to the db
-MongoClient.connect("mongodb://localhost:27017/magickeeper", function(err, db) {
+MongoClient.connect((config.dbUrl), function(err, db) {
   //Any problems display an error in the terminal
   if(err) { return console.dir(err); }
 
