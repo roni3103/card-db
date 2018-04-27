@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var MongoClient = require('mongodb').MongoClient;
+// Using './' means we can pick up the config and it's not treated as 
 const config = require('./config');
 
 //variables
