@@ -10,6 +10,7 @@ const cmd = require('node-cmd');
 var collection;
 var allMagic;
 var resultObj;
+var importCsv;
 
 //Where to look for the home page?
 app.use(express.static(__dirname + '/mtgkeeper'));
@@ -37,12 +38,16 @@ MongoClient.connect((config.dbUrl), function(err, db) {
   // builtCommand = 'mongoimport -h ds251179.mlab.com:51179 -d magickeeper -c mtgkeeper -u roni -p training123 --file ../' + csvFileName +'.csv --type csv --headerline';
   // cmd.run(builtCommand);
 
-  importCsv = function(csvFileName) {
+  //importCsv = function(csvFileName) {
     file = csvFileName;
-    builtCommand = 'mongoimport -h ds251179.mlab.com:51179 -d magickeeper -c mtgkeeper -u roni -p training123 --file ../' + file +'.csv --type csv --headerline';
+    builtCommand = 'mongoimport -h ' + config.dbLink + ' -d magickeeper -c mtgkeeper -u roni -p ' + config.dbPass + ' -file ../' + file +'.csv --type csv --headerline';
     cmd.run(builtCommand);
+    console.log('Done');
     
-  }
+  // }
+  // importCsv('test-deck-3');
+
+
 
 });
 
