@@ -4,6 +4,7 @@ var path = require('path');
 var MongoClient = require('mongodb').MongoClient;
 // Using './' means we can pick up the config and it's not treated as 
 const config = require('./config');
+const cmd = require('node-cmd');
 
 //variables
 var collection;
@@ -26,8 +27,22 @@ MongoClient.connect((config.dbUrl), function(err, db) {
     //pass the results to an object so we can do things with it below
     resultObj=results;
 
-})
+  })
 
+  //import from the csvs
+  // importCsv = function(csvFileName) {
+  //   cmd.run(`'mongoimport -h ds251179.mlab.com:51179 -d magickeeper -c mtgkeeper -u roni -p training123 --file ../${csvFileName}.csv --type csv --headerline'`)
+  // }
+  // csvFileName = "test-deck-2";
+  // builtCommand = 'mongoimport -h ds251179.mlab.com:51179 -d magickeeper -c mtgkeeper -u roni -p training123 --file ../' + csvFileName +'.csv --type csv --headerline';
+  // cmd.run(builtCommand);
+
+  importCsv = function(csvFileName) {
+    file = csvFileName;
+    builtCommand = 'mongoimport -h ds251179.mlab.com:51179 -d magickeeper -c mtgkeeper -u roni -p training123 --file ../' + file +'.csv --type csv --headerline';
+    cmd.run(builtCommand);
+    
+  }
 
 });
 
